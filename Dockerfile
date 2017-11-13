@@ -1,9 +1,13 @@
 FROM registry.access.redhat.com/rhel6/rhel
 MAINTAINER Gary Lamperillo
-# Add Web server, update image, and clear cache
-RUN yum -y install httpd && yum -y update; yum clean all
-# Add some data to web server
-RUN echo "This Web server is working." > /var/www/html/index.html
-EXPOSE 80
-ENTRYPOINT [ "/usr/sbin/httpd" ]
-CMD [ "-D", "FOREGROUND" ]
+RUN yum -y update; yum clean all
+RUN yum -y install epel-release; yum clean all
+RUN yum -y install nodejs npm; yum clean all
+
+ADD . /src
+
+RUN cd /src; npm install
+
+EXPOSE 8080
+
+CMD ["node", "/src/index.js"]
