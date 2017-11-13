@@ -1,5 +1,5 @@
 # Based on the Fedora image created by Matthew Miller.
-FROM mattdm/fedora:f19
+FROM rhel6/rhel
 # Install nodejs and npm packages.
 RUN yum update -y
 RUN yum install -y --skip-broken nodejs npm
